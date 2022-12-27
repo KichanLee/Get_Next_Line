@@ -14,6 +14,28 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
+
+static int idx;
+
+char	*get_next_line(int fd);
+{
+	/**
+	 * @brief 
+	 * 1. 파일 오픈 해주고
+	 * 2. 개행이 있기 전까지 출력을 해주는데 && 버퍼사이즈도 주어진다.
+	 * 3. static이라는 개념을 사용해야한다.
+	 * 4. 
+	 */
+	int	fd;
+
+	while (fd)
+	{
+
+	}
+
+}
+
+
 int main()
 {
 	char buff[10000];
@@ -29,7 +51,5 @@ int main()
 
 	buff[2] = '\0';
 	printf("%s", buff);
-	
-
-		
+			
 }
