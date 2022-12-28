@@ -9,47 +9,60 @@
 /*   Updated: 2022/12/24 17:58:39 by kichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-//test
 
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdlib.h>
+#include <string.h>
+#include "get_next_line.h"
+#define	BUFFERSIZE 1000
+static char *str;
 
-static int idx;
-
-char	*get_next_line(int fd);
+char	*get_next_line(int fd)
 {
-	/**
-	 * @brief 
-	 * 1. 파일 오픈 해주고
-	 * 2. 개행이 있기 전까지 출력을 해주는데 && 버퍼사이즈도 주어진다.
-	 * 3. static이라는 개념을 사용해야한다.
-	 * 4. 
-	 */
-	int	fd;
+	char		*buffer;
+	ssize_t		rdnum;
+	size_t			idx;
 
-	while (fd)
+	buffer = malloc(BUFFERSIZE + 1);
+
+	rdnum = read(fd, buffer, BUFFERSIZE);
+	// 버퍼에 담긴 내용부터 개행해주어야함.
+	idx = 0;
+	while (buffer[idx] != '\n')
 	{
 
+		if(buffer[idx] == '\n')
+			str = ft_substr(buffer, 0, idx);
+	
+	}
+	while (rdnum > 0)
+	{
+		rdnum = read(fd, buffer, BUFFERSIZE);
 	}
 
+	return (buffer);
 }
-
 
 int main()
 {
-	char buff[10000];
 	int fd;
-	int idx = 0;
 	int rdcnt;
+
+	//printf("\nstatic idx value is : %d\n" ,idx);
 	fd = open("a.txt", O_RDONLY);
 
 	printf("fd : %d\n", fd);
-	
-	rdcnt = read(fd, &buff[idx], 2);
-	printf("rdcnt : %d\n", rdcnt);
+	int cnt = 0;
 
-	buff[2] = '\0';
-	printf("%s", buff);
-			
+	while (cnt < 4)
+	{ 
+		char *str = get_next_line(fd);
+		printf("%s", str);
+		printf("static idx value is : %d\n" ,idx);
+		++cnt;
+	}
+	printf("cnt value is : %d", cnt);
+	close(fd);	
 }
